@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Exam | Organiser </title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <div th:replace="organiser/fragments/navbar :: header"></div>
+    <div th:replace="organiser/fragments/sidenav :: mySidebar"></div>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>View Exam</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Show Exam</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>Exam Code : </td>
+                                <td th:text="${exam.getExamCode()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Exam Title : </td>
+                                <td th:text="${exam.getTitle()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Exam Description : </td>
+                                <td th:text="${exam.getDescription()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Date Of Exam : </td>
+                                <td th:text="${exam.getStartDate()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Exam Time : </td>
+                                <td th:text="${exam.getExamTime()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Marks (Per Question) : </td>
+                                <td th:text="${exam.getMarksOfEachQuestion()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Negative Marks (Per Question) : </td>
+                                <td th:text="${exam.getNegativeMarkOfEachQuestion()}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Manage Questions</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal-question">
+                                    Add Question
+                                </button>
+                                <ol>
+                                    <li th:each="question :${exam.getQuestions()}">
+                                        <div>
+                                            <span th:text="${question.getStatement()}" th:id="'question_'+${question.getId()}"></span>
+                                            <a class="text-danger ml-3" th:href="@{/organiser/question/delete(exam_id=${exam.getId()},question_id=${question.getId()})}"><i class="fa fa-trash"></i></a>
+                                            <a class="text-success ml-3"><i class="fa fa-pen" data-toggle="modal" data-target="#modal-edit-question" th:onclick="'editQuestion('+${question.getId()}+')'"></i></a>
+                                        </div>
+                                        <ul>
+                                            <li th:each="option : ${question.getOptions()}">
+                                                <span th:text="${option.getOption()}" th:class="'options_'+${question.getId()}"></span>
+                                            </li>
+                                        </ul>
+                                        <div class="text-danger">Answer : <span th:id="'answer_'+${question.getId()}" th:text="${question.getAnswer().getAnswer().getOption()}"></span></div>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Manage Users</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/organiser/user/add}" method="post" class="form-inline">
+                                    <div class="form-group p-2">
+                                        <label for="name" class="pr-2">Name:</label>
+                                        <input type="text" id="name" class="form-control" name="name">
+                                    </div>
+                                    <input type="hidden" name="exam_id" th:value="${exam.getId()}">
+                                    <div class="form-group p-2">
+                                        <label for="email" class="pr-2">Email:</label>
+                                        <input type="text" id="email" class="form-control" name="email">
+                                    </div>
+                                    <div class="form-group p-2">
+                                        <input type="submit" class="btn btn-primary" name="submit" value="Add User">
+                                        <a  th:href="@{/organiser/exam/mail(id=${exam.getId()})}" class="btn btn-danger ml-2" >Mail Users</a>
+                                    </div>
+                                </form>
+                                <form method="POST" th:action="@{/user/csv/upload}" enctype="multipart/form-data" class="form-inline">
+                                    <input type="hidden" name="exam_id" th:value="${exam.getId()}">
+                                    <div class="form-group p-2">
+                                        <label for="file" class="pr-2">Select a CSV file</label>
+                                        <input type="file" name="file" class="form-control p-1" id="file" accept=".csv">
+                                    </div>
+                                    <div class="form-group p-2">
+                                        <button type="submit" class="btn btn-primary">Import Users</button>
+                                    </div>
+                                </form>
+                                <div class="alert alert-success" role="alert"  th:inline="text" th:if="${success_message}">
+                                    <button type="button" class="close" data-dismiss="alert">x</button>
+                                    [[${success_message}]]
+                                </div>
+                                <div class="alert alert-danger" role="alert" th:inline="text" th:if="${error_message}">
+                                    <button type="button" class="close" data-dismiss="alert">x</button>
+                                    [[${error_message}]]
+                                </div>
+                                <table id="examList" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Password</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="userExam: ${exam.getUserExam()}">
+                                        <td th:text="${userExam.getUser().getName()}"></td>
+                                        <td th:text="${userExam.getUser().getEmail()}"></td>
+                                        <td th:text="${userExam.getPassword()}"></td>
+                                        <td><a th:href="@{/organsier/user/delete(id=${userExam.getId()})}"><i class="fa fa-trash"></i></a></td>
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="modal-question">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form th:action="@{/organiser/question/add}" method="post">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Question</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" class="form-control" name="exam_id" th:value="${exam.getId()}">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="question" placeholder="Enter your question" required>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-sm-1">
+                                            <input type="radio" name="answer" value="1" checked="checked">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" name="option[]" placeholder="Option 1" required>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-sm-1">
+                                            <input type="radio" name="answer" value="2">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" name="option[]" placeholder="Option 2" required>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-sm-1">
+                                            <input type="radio" name="answer" value="3">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" name="option[]" placeholder="Option 3" required>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-sm-1">
+                                            <input type="radio" name="answer" value="4">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" name="option[]" placeholder="Option 4" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <div class="modal fade" id="modal-edit-question">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form th:action="@{/organiser/question/edit}" method="post">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Question</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" class="form-control" name="question_id" id="edit_question_id">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="question" id="edit_question" placeholder="Enter your question" required>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-sm-1">
+                                            <input type="radio" name="answer" value="1" checked="checked">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" id="edit_option_1" name="option[]" placeholder="Option 1" required>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-sm-1">
+                                            <input type="radio" name="answer" value="2">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" id="edit_option_2" name="option[]" placeholder="Option 2" required>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-sm-1">
+                                            <input type="radio" name="answer" value="3">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" id="edit_option_3" name="option[]" placeholder="Option 3" required>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-sm-1">
+                                            <input type="radio" name="answer" value="4">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <input type="text" class="form-control" id="edit_option_4" name="option[]" placeholder="Option 4" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+            </div>
+        </section>
+    </div>
+    <div th:replace="organiser/fragments/navbar :: footer"></div>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- DataTables -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/webjars/AdminLTE/3.0.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/webjars/AdminLTE/3.0.0/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/webjars/AdminLTE/3.0.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="/webjars/AdminLTE/3.0.0/dist/js/adminlte.js"></script>
+<script>
+    function editQuestion(id){
+        $("#edit_question_id").val(id);
+        $("#edit_question").val($('#question_'+id).html());
+        $("#edit_option_1").val($('.options_'+id).eq(0).html());
+        $("#edit_option_2").val($('.options_'+id).eq(1).html());
+        $("#edit_option_3").val($('.options_'+id).eq(2).html());
+        $("#edit_option_4").val($('.options_'+id).eq(3).html());
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard </title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+
+    <div th:replace="user/header :: header"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 m-1">
+                        <input type="hidden" id="remainingExamTime" th:value="${exam.getRemainingTime()}">
+                        <div class="countdown text-right" style="font-size: 18px;"><b>Time Remaining :</b> <span id="timer"></span></div>
+                    </div>
+                    <div class="col-sm-3">
+                       <div class="card mt-2">
+                           <div class="card-body">
+                               <div class="row">
+                                   <div class="col-12 text-center text-gray text-bold" >
+                                       Question palette
+                                   </div>
+                                   <div class="col-3" th:each="i: ${#numbers.sequence(0,exam.getQuestions().size()-1)}">
+                                       <div th:if="${answers[exam.getQuestions().get(i).getId()]}" class="text-center text-bold bg-success p-2 mt-2">
+                                           <a th:href="@{'/'+${exam.getExamCode()}+'/exam/'+${i+1}}" th:text="${i+1}" class="d-block"></a>
+                                       </div>
+                                       <div th:unless="${answers[exam.getQuestions().get(i).getId()]}" class="text-center text-bold bg-danger p-2 mt-2">
+                                           <a th:href="@{'/'+${exam.getExamCode()}+'/exam/'+${i+1}}" th:text="${i+1}" class="d-block"></a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                <form th:action="@{'/' + ${exam.getExamCode()} + '/submit'}" method="post">
+                                    <div>
+                                        <div th:text="'Question '+${question_no}" class="text-bold text-primary mb-2 mr-1"></div>
+                                        <div th:text="${question.getStatement()}" class="mb-2 text-bold"></div>
+                                    </div>
+                                    <input type="hidden" name="question_id" th:value="${question.getId()}">
+                                    <div class="form-group">
+                                        <div class="form-check" th:each="option : ${question.getOptions()}">
+                                            <input th:if="${answers[question.getId()]==option.getId()}" class="form-check-input" type="radio" th:name="answer_id" th:value="${option.getId()}" checked>
+                                            <input th:unless="${answers[question.getId()]==option.getId()}" class="form-check-input" type="radio" th:name="answer_id" th:value="${option.getId()}">
+                                            <span class="form-check-label" th:text="${option.getOption()}"></span>
+                                        </div>
+                                    </div>
+                                    <input type="reset" value="Reset Answer" class="btn btn-danger" onclick="resetRadioButtons()">
+                                    <div th:if="${exam.isLastQuestion(question.getId())}" class="d-inline">
+                                        <input type="submit" value="Save" class="btn btn-primary float-right">
+                                    </div>
+                                    <div th:unless="${exam.isLastQuestion(question.getId())}" class="d-inline">
+                                        <input type="submit" value="Save and Next" class="btn btn-primary float-right">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function resetRadioButtons(){
+                        $("input:radio").attr("checked", false);
+                        console.log("reseting radio");
+                    }
+                </script>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/webjars/AdminLTE/3.0.0/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/webjars/AdminLTE/3.0.0/dist/js/demo.js"></script>
+
+<script>
+    // Set the date we're counting down to
+    var remainingExamTime=$('#remainingExamTime').val()/1000;
+    calculateTime(remainingExamTime);
+    // Update the count down every 1 second
+    setInterval(function() {
+       calculateTime(--remainingExamTime);
+    }, 1000);
+
+    function calculateTime(time)
+    {
+        var minRemaining=Math.floor(time/60);
+        var secRemaining=Math.floor(time%60);
+        var text=minRemaining+" mins "+secRemaining+" sec";
+        $("#timer").html(text);
+        if(Math.floor(time)<=0){
+            console.log("hello clicked");
+            var href = $("#submitButton").attr('href');
+            window.location.href = href;
+        }
+    }
+</script>
+</body>
+</html>
