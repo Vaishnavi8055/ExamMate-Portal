@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Organiser | Dashboard </title>
+    <title>Examiner | Dashboard </title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/plugins/fontawesome-free/css/all.min.css">
@@ -74,14 +74,14 @@
                                         <input type="number" class="form-control" th:field="*{negativeMarkOfEachQuestion}" placeholder="">
                                     </div>
                                     <div class="form-group">
-                                        <label>Exam Time</label>
+                                        <label>Exam Duration</label>
                                         <input type="number" class="form-control" th:field="*{examTime}" placeholder="In minutes">
                                     </div>
                                     <div class="form-group">
-                                        <label for="date">Date:</label>
+                                        <label for="date">Date & Time:</label>
                                         <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                                             <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"
-                                                   th:field="*{startDate}" id="date" placeholder="Date" />
+                                                   th:field="*{startDate}" id="date" placeholder="Date & Time"/>
                                             <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                             </div>

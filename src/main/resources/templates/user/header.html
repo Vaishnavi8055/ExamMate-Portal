@@ -6,7 +6,7 @@
         <div class="container">
             <a th:href="@{/}" class="navbar-brand">
                 <!--                <img src="/webjars/AdminLTE/3.0.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">-->
-                <span class="brand-text font-weight-light"><b>JNU-E Portal</b></span>
+                <span class="brand-text font-weight-light"><b>ExamMate Portal</b></span>
             </a>
 
             <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,6 +21,9 @@
                 <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" th:if="${#httpServletRequest.requestURI.contains('exam')}">
+
+                        <!--/*@thymesVar id="getExamCode" type="text"*/-->
+                        <!--/*@thymesVar id="exam" type="text"*/-->
                         <a class="btn btn-success" id="submitButton" th:href="@{'/'+${exam.getExamCode()}+'/final'}">
                             Submit Exam
                         </a>

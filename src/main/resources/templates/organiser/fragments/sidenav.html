@@ -4,14 +4,16 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a th:href="@{/organiser/dashboard}" class="brand-link d-block">
-        <span class="brand-text font-weight-light d-block text-center"><b>JNU-E Portal</b></span>
+        <span class="brand-text font-weight-light d-block text-center"><b>ExamMate Portal</b></span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3">
-            <div class="info text-center text-white d-block">Hello Organiser!</div>
+            <div class="info text-center text-white d-block">
+                <i class="fas fa-chalkboard-teacher"></i> <h4>Welcome Examiner</h4>
+            </div>
         </div>
 
         <!-- Sidebar Menu -->
@@ -21,7 +23,7 @@
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="/organiser/dashboard" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-laptop"></i>
                         <p>
                             Dashboard
 <!--                            <span class="right badge badge-danger">New</span>-->
@@ -30,12 +32,20 @@
                 </li>
                 <li class="nav-item">
                     <a href="/organiser/exams" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-history"></i>
                         <p>
-                            Exams
+                            Exam History
                         </p>
                     </a>
                 </li>
+                <!--<li class="nav-item">
+                    <a href="/organiser/exams" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Contact Us
+                        </p>
+                    </a>
+                </li>-->
 
             </ul>
         </nav>

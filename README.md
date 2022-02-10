@@ -1,4 +1,4 @@
-# Exam Portal - JNU E-Portal
+# ExamMate- Online Examination Portal
 
 A java Spring Boot Project 
 

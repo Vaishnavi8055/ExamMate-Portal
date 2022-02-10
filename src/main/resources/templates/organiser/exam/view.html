@@ -59,11 +59,11 @@
                                 <td th:text="${exam.getDescription()}"></td>
                             </tr>
                             <tr>
-                                <td>Date Of Exam : </td>
+                                <td>Date & Time Of Exam :</td>
                                 <td th:text="${exam.getStartDate()}"></td>
                             </tr>
                             <tr>
-                                <td>Exam Time : </td>
+                                <td>Exam Duration :</td>
                                 <td th:text="${exam.getExamTime()}"></td>
                             </tr>
                             <tr>
@@ -121,17 +121,18 @@
                             <div class="card-body">
                                 <form th:action="@{/organiser/user/add}" method="post" class="form-inline">
                                     <div class="form-group p-2">
-                                        <label for="name" class="pr-2">Name:</label>
+                                        <label for="name" class="pr-2">Student Name</label>
                                         <input type="text" id="name" class="form-control" name="name">
                                     </div>
                                     <input type="hidden" name="exam_id" th:value="${exam.getId()}">
                                     <div class="form-group p-2">
-                                        <label for="email" class="pr-2">Email:</label>
+                                        <label for="email" class="pr-2">Student Email-Id</label>
                                         <input type="text" id="email" class="form-control" name="email">
                                     </div>
                                     <div class="form-group p-2">
-                                        <input type="submit" class="btn btn-primary" name="submit" value="Add User">
-                                        <a  th:href="@{/organiser/exam/mail(id=${exam.getId()})}" class="btn btn-danger ml-2" >Mail Users</a>
+                                        <input type="submit" class="btn btn-success" name="submit" value="Add Student">
+                                        <a th:href="@{/organiser/exam/mail(id=${exam.getId()})}"
+                                           class="btn btn-primary ml-2">Mail Students</a>
                                     </div>
                                 </form>
                                 <form method="POST" th:action="@{/user/csv/upload}" enctype="multipart/form-data" class="form-inline">
@@ -141,13 +142,14 @@
                                         <input type="file" name="file" class="form-control p-1" id="file" accept=".csv">
                                     </div>
                                     <div class="form-group p-2">
-                                        <button type="submit" class="btn btn-primary">Import Users</button>
+                                        <button type="submit" class="btn btn-primary">Import Student Details</button>
                                     </div>
                                 </form>
                                 <div class="alert alert-success" role="alert"  th:inline="text" th:if="${success_message}">
                                     <button type="button" class="close" data-dismiss="alert">x</button>
                                     [[${success_message}]]
                                 </div>
+
                                 <div class="alert alert-danger" role="alert" th:inline="text" th:if="${error_message}">
                                     <button type="button" class="close" data-dismiss="alert">x</button>
                                     [[${error_message}]]

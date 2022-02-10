@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard </title>
+    <title>Exam Result</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -30,7 +30,9 @@
                             <div class="card-body">
                                 <div>
                                     <div>
-                                        <h1 class="text-bold text-center">You have Scored <span th:text="${score}" class="text-success text-bold"></span> Marks</h1>
+                                        <h2 class="text-bold text-center">You have Scored <span th:text="${score}"
+                                                                                                class="text-success text-bold"></span>
+                                            Marks</h2>
                                     </div>
                                     <h3>
                                         <span class="badge badge-secondary" th:text="${exam.getQuestions().size()}"></span>
@@ -59,6 +61,8 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+    <!-- /.content-wrapper -->
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 <!-- ./wrapper -->
 
