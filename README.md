@@ -15,11 +15,11 @@ Password : password
 
 ### HomePage
 
-![Screenshot from 2021-01-22 23-49-43](https://user-images.githubusercontent.com/35486010/105529872-0f71b400-5d0d-11eb-9441-d931e7135d37.png)
+![Screenshot from 2021-01-22 23-49-43](https://raw.githubusercontent.com/abd8126/images/main/Home%20Page.jpeg)
 
-### Exam Login Page
+### Examiner Dashboard
 
-![Screenshot from 2021-01-22 23-49-48](https://user-images.githubusercontent.com/35486010/105529877-113b7780-5d0d-11eb-9ac7-3d943098b035.png)
+![Screenshot from 2021-01-22 23-49-48](https://raw.githubusercontent.com/abd8126/images/main/Examiner%20DashBoard.jpeg)
 
 ### Organiser Login Page
 
