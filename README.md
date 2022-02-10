@@ -21,17 +21,17 @@ Password : password
 
 ![Screenshot from 2021-01-22 23-49-48](https://raw.githubusercontent.com/abd8126/images/main/Examiner%20DashBoard.jpeg)
 
-### Organiser Login Page
+### Create New Exam
 
-![Screenshot from 2021-01-22 23-49-50](https://user-images.githubusercontent.com/35486010/105529878-126ca480-5d0d-11eb-8f34-39db24feb940.png)
+![Screenshot from 2021-01-22 23-49-50](https://raw.githubusercontent.com/abd8126/images/main/Create%20New%20Exam.jpeg)
 
-### Organiser Dashboard
+### Add Users
 
-![Screenshot from 2021-01-22 23-48-31](https://user-images.githubusercontent.com/35486010/105529885-1698c200-5d0d-11eb-9387-480d3172026f.png)
+![Screenshot from 2021-01-22 23-48-31](https://raw.githubusercontent.com/abd8126/images/main/Add%20Users.jpeg)
 
-### List Exam Screen 
+### View Exam Details
 
-![Screenshot from 2021-01-22 23-48-34](https://user-images.githubusercontent.com/35486010/105529905-1ac4df80-5d0d-11eb-87ff-f08b6de945d4.png)
+![Screenshot from 2021-01-22 23-48-34](https://raw.githubusercontent.com/abd8126/images/main/View%20Exam%20Details.jpeg)
 
 ### View Exam Screen 
 ![Screenshot_2021-01-22 Exam Organiser](https://user-images.githubusercontent.com/35486010/105530090-5495e600-5d0d-11eb-82b9-510acc1096dd.png)
